@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 public @interface Metadata {
 
 	enum Case {
-		SnakeCase, Original
+		SNAKE_CASE, ORIGINAL, UPPERCASE
 	}
 
-	Case[] value() default Case.Original;
+	Case[] value() default Case.UPPERCASE;
 
     boolean withStaticField() default false;
 

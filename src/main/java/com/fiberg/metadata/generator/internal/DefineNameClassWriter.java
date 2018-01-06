@@ -35,9 +35,19 @@ class DefineNameClassWriter {
 
 	void addFields(final String field) {
 		for (final Metadata.Case c : cases) {
-			final String fieldName = c == Metadata.Case.Original ? field
-					: convertToSnakeCase(field);
-			fields.add(fieldName);
+			switch (c) {
+				case ORIGINAL:
+					fields.add(field);
+					break;
+				case SNAKE_CASE:
+					fields.add(convertToSnakeCase(field));
+					break;
+				case UPPERCASE:
+					fields.add(convertToSnakeCase(field).toUpperCase());
+					break;
+				default:
+					break;
+			}
 		}
 	}
 

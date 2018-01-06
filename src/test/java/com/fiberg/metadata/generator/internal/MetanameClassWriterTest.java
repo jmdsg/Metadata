@@ -30,7 +30,7 @@ public class MetanameClassWriterTest {
 	@Test
 	public void testWrite() throws IOException {
 		final DefineNameClassWriter classWriter = new DefineNameClassWriter(
-				"com.fiberg.metadata.generator.internal", "TestSource1", new Case[]{Case.Original, Case.SnakeCase});
+				"com.fiberg.metadata.generator.internal", "TestSource1", new Case[]{Case.ORIGINAL, Case.SNAKE_CASE});
 		classWriter.addFields("test");
 		classWriter.addFields("testCase");
 		classWriter.addFields("TestCase");
