@@ -33,7 +33,6 @@ public class MetanameClassWriterTest {
 				"com.fiberg.metadata.generator.internal", "TestSource1", new Case[]{Case.ORIGINAL, Case.SNAKE_CASE});
 		classWriter.addFields("test");
 		classWriter.addFields("testCase");
-		classWriter.addFields("TestCase");
 		classWriter.addFields("testCaseForClassBuilder");
 		final StringWriter writer = new StringWriter();
 		classWriter.write(writer);

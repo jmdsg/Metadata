@@ -7,6 +7,5 @@ import com.fiberg.metadata.generator.Metadata;
 public class TestSource1 extends TestSource1Parent {
 	private String test;
 	private String testCase;
-	private String TestCase;
     private static final String STATIC_FIELD = "static_field";
 }

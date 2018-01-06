@@ -5,12 +5,7 @@ import com.squareup.javawriter.JavaWriter;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +19,7 @@ class DefineNameClassWriter {
 	private final String packageName;
 	private final String targetClassSimpleName;
 	private final Metadata.Case[] cases;
-	private final Set<String> fields = new HashSet<String>();
+	private final Map<String, String> fields = new HashMap<>();
 
 	DefineNameClassWriter(final String packageName,
 	                      final String targetClassSimpleName, final Metadata.Case[] cases) {
@@ -37,13 +32,13 @@ class DefineNameClassWriter {
 		for (final Metadata.Case c : cases) {
 			switch (c) {
 				case ORIGINAL:
-					fields.add(field);
+					fields.put(field, field);
 					break;
 				case SNAKE_CASE:
-					fields.add(convertToSnakeCase(field));
+					fields.put(convertToSnakeCase(field), field);
 					break;
 				case UPPERCASE:
-					fields.add(convertToSnakeCase(field).toUpperCase());
+					fields.put(convertToSnakeCase(field).toUpperCase(), field);
 					break;
 				default:
 					break;
@@ -63,13 +58,13 @@ class DefineNameClassWriter {
 			javaWriter.emitPackage(packageName).beginType(getClassFQDN(),
 					"class", EnumSet.of(Modifier.PUBLIC));
 
-			final List<String> fields = new ArrayList<String>(this.fields);
-			Collections.sort(fields);
+			final List<Map.Entry<String, String>> fields = new ArrayList<>(this.fields.entrySet());
+			fields.sort(Comparator.comparing(Map.Entry::getValue));
 
-			for (final String field : fields) {
-				javaWriter.emitField("String", field, EnumSet.of(
+			for (final Map.Entry<String, String> entry : fields) {
+				javaWriter.emitField("String", entry.getKey(), EnumSet.of(
 						Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL), "\""
-						+ field + "\"");
+						+ entry.getValue() + "\"");
 			}
 			javaWriter.endType();
 		} finally {
